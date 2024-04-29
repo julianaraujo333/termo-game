@@ -8,14 +8,20 @@
 
   &__tile{
     display: flex;
-    place-items: center;
+    align-items: center;
+    justify-content: center;
     width: rem(52);
     height: rem(52);
-    
+
     border: rem(3) solid #4C4347;
     border-radius: 10%;
     
-
+    font-size: rem(32);
     cursor: pointer;
+
+    &:focus{
+      outline: 0;
+      border-bottom: rem(7) solid #4C4347;
+    }
   }
 }
