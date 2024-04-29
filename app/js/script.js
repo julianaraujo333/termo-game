@@ -1,7 +1,16 @@
 const lettersPattern = /[a-z]/;
-const currentGuessCount = 1;
-const currentGuess = document.querySelector('#guess' + currentGuessCount);
-const currentLetter = currentGuess.dataset.letters;
+let currentGuessCount = 1;
+let currentGuess = document.querySelector('#guess' + currentGuessCount);
+let currentLetter = currentGuess.dataset.letters;
+let words = ['nobre', 'audaz', 'sonho', 'amigo', 'lapso'];
+let solutionWord = '';
+
+const chooseWord = () => {
+  let randomItem = Math.floor(Math.random() * (words.length - 1)) + 1;
+  solutionWord = words[randomItem];
+};
+
+chooseWord();
 
 document.addEventListener('keydown', (e) => {
 	let keypress = e.key;
@@ -10,19 +19,20 @@ document.addEventListener('keydown', (e) => {
   if (currentGuessCount < 7) {
     if (
       keypress.length == 1 &&
-      lettersPattern.test(e.key) 
+      lettersPattern.test(e.key) &&
+			currentGuess.dataset.letters.length < 5
     ) {
 			updateLetters(keypress);
       console.log('is letter');
     } else if (e.key == 'Backspace' && currentGuess.dataset.letters != '' || e.key === "Delete" && currentGuess.dataset.letters != '') {
-			// const focusedTile = document.activeElement;
-			// console.log('focus' + focusedTile.id)
+			
       deleteFromLetters();
     } else if (e.key == 'Enter' && currentGuess.dataset.letters.length == 5) {
       // submitGuess();
     }
   }
 })
+
 
 /**
  * Updates the entered letters for the current guess and updates corresponding tiles.
@@ -33,7 +43,6 @@ const updateLetters = (letter) => {
 	let newLetters = oldLetters + letter; 
 	let currentTile = newLetters.length;
 	currentGuess.dataset.letters = newLetters;
-
 	updateTiles(currentTile, letter);
 }
 
@@ -57,3 +66,8 @@ const deleteFromLetters = () => {
 const deleteFromTiles = (tileNumber) =>{
 	document.querySelector('#guessTile' + tileNumber).innerText = "";
 }
+
+fetch("https://api.dicionario-aberto.net/random")
+    .then(response => response.json())
+    .then(data => console.log(data))
+
