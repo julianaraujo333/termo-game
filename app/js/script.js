@@ -12,10 +12,17 @@ const chooseWord = () => {
 
 chooseWord();
 
+console.log('\nsolutionWord ' + solutionWord)
+/* 
+	* **   DICIONARIO API ** 
+	* fetch("https://api.dicionario-aberto.net/random")    
+	*		.then(response => response.json())
+	*		.then(data => console.log(data))
+*/
+
 document.addEventListener('keydown', (e) => {
 	let keypress = e.key;
 
-	console.log(e)
   if (currentGuessCount < 7) {
     if (
       keypress.length == 1 &&
@@ -23,15 +30,22 @@ document.addEventListener('keydown', (e) => {
 			currentGuess.dataset.letters.length < 5
     ) {
 			updateLetters(keypress);
-      console.log('is letter');
+      // console.log('is letter');
     } else if (e.key == 'Backspace' && currentGuess.dataset.letters != '' || e.key === "Delete" && currentGuess.dataset.letters != '') {
 			
       deleteFromLetters();
     } else if (e.key == 'Enter' && currentGuess.dataset.letters.length == 5) {
-      // submitGuess();
+			// console.log('submit guess')
+			for(let i = 0; i < 5; i++){
+				checkLetter(i);
+			}
     }
   }
 })
+
+const submitGuess = () =>{
+
+}
 
 
 /**
@@ -67,7 +81,35 @@ const deleteFromTiles = (tileNumber) =>{
 	document.querySelector('#guessTile' + tileNumber).innerText = "";
 }
 
-fetch("https://api.dicionario-aberto.net/random")
-    .then(response => response.json())
-    .then(data => console.log(data))
+/**
+ *  Check Letter solution
+ */
 
+const checkLetter = (position) =>{
+	console.log('position ' + position)
+
+  let guessedLetter = currentGuess.dataset.letters.charAt(position);
+  let solutionLetter = solutionWord.charAt(position);
+  console.log(guessedLetter, solutionLetter);
+
+	// Se a letra existir e a posição estiver correta retorna correct
+	if(guessedLetter == solutionLetter){
+		console.log('correct')
+		return 'correct'
+	} else{
+		// se a letra existir e a posicao estiver incorreta retorna present 
+		if(checkLetterExists(guessedLetter)){
+			console.log('present')
+			return 'present'
+		}else{
+			// se a letra não existir na solucao retorna absent
+			console.log('absent')
+			return 'absent'
+		}
+	}
+}
+
+
+const checkLetterExists =  (letter) => {
+	return solutionWord.includes (letter)
+}
