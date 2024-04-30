@@ -22,6 +22,12 @@ console.log('\nsolutionWord ' + solutionWord)
 
 document.addEventListener('keydown', (e) => {
 	let keypress = e.key;
+	let currentTile = document.querySelector('#guess'+ currentGuessCount +'Tile' + currentGuess.dataset.letters.length);
+
+	// remove bottom border focus
+	if(currentGuess.dataset.letters.length){
+		currentTile.classList.remove('current-letter');
+	}
 
   if (currentGuessCount < 7) {
     if (
@@ -63,8 +69,10 @@ const updateLetters = (letter) => {
 }
 
 const updateTiles = (tileNumber, letter) => {
-	let currentTile = document.querySelector('#guessTile' + tileNumber);
+	let currentTile = document.querySelector('#guess'+ currentGuessCount +'Tile' + tileNumber);
 	currentTile.innerText = letter;
+
+	currentTile.classList.add('current-letter');
 }
 
 
@@ -80,7 +88,8 @@ const deleteFromLetters = () => {
 };
 
 const deleteFromTiles = (tileNumber) =>{
-	document.querySelector('#guessTile' + tileNumber).innerText = "";
+	let currentTile = document.querySelector('#guess'+ currentGuessCount +'Tile' + tileNumber);
+	currentTile.innerText = "";
 }
 
 /**
@@ -109,10 +118,14 @@ const checkLetterExists =  (letter) => {
 	return solutionWord.includes (letter)
 }
 
+/**
+ *  Reveal letters state
+ */
+
 const revealTile = (i, status) => {
 	let guessedLetter = currentGuess.dataset.letters.charAt(i);
 	let tileNum = i + 1;
-	let tile = document.querySelector('#guessTile' + tileNum);
+	let tile = document.querySelector('#guess'+ currentGuessCount +'Tile' + tileNum);
 
 	if(status == 'correct'){
 		tile.classList.add('correct');
@@ -128,8 +141,9 @@ const revealTile = (i, status) => {
 	flipTile(tileNum)
 }
 
+// adding flip animation
 const flipTile = (tileNum) => {
-	let tile = document.querySelector('#guessTile' + tileNum);
+	let tile = document.querySelector('#guess'+ currentGuessCount +'Tile' + tileNum);
 	
   tile.classList.add('flip-in');
   setTimeout(() => {

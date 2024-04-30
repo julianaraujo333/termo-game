@@ -5,6 +5,7 @@
   grid-template-columns: repeat(5, 1fr);
   gap: rem(3);
   width: rem(300);
+  margin-bottom: rem(6);
 
   &__tile{
     display: flex;
@@ -13,16 +14,16 @@
     width: rem(52);
     height: rem(52);
 
-    border: rem(3) solid #4C4347;
+    border: rem(4) solid #4C4347;
     border-radius: 10%;
     
     font-size: rem(32);
     cursor: pointer;
+  }
 
-    &:focus{
-      outline: 0;
-      border-bottom: rem(7) solid #4C4347;
-    }
+  .current-letter{
+    outline: 0;
+    border-bottom: rem(7) solid #4C4347;
   }
 
   .correct{
