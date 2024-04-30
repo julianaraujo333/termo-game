@@ -37,7 +37,9 @@ document.addEventListener('keydown', (e) => {
     } else if (e.key == 'Enter' && currentGuess.dataset.letters.length == 5) {
 			// console.log('submit guess')
 			for(let i = 0; i < 5; i++){
-				revealTile(i, checkLetter(i));
+				setTimeout(()=>{
+					revealTile(i, checkLetter(i));
+				}, i * 200)
 			}
     }
   }
@@ -125,4 +127,22 @@ const revealTile = (i, status) => {
 		tile.classList.add('absent');
 		tile.setAttribute("aria-label", "letra '" + guessedLetter + "' está errada");
 	}
+
+	flipTile(tileNum)
 }
+
+const flipTile = (tileNum) => {
+	let tile = document.querySelector('#guessTile' + tileNum);
+	
+  tile.classList.add('flip-in');
+  setTimeout(() => {
+    tile.classList.add(state);
+  }, 250);
+  setTimeout(() => {
+    tile.classList.remove('flip-in');
+    tile.classList.add('flip-out');
+  }, 250);
+  setTimeout(() => {
+    tile.classList.remove('flip-out');
+  }, 1500);
+};
