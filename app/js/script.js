@@ -88,11 +88,8 @@ const deleteFromTiles = (tileNumber) =>{
  */
 
 const checkLetter = (position) =>{
-	console.log('position ' + position)
-
   let guessedLetter = currentGuess.dataset.letters.charAt(position);
   let solutionLetter = solutionWord.charAt(position);
-  console.log(guessedLetter, solutionLetter);
 
 	// Se a letra existir e a posição estiver correta retorna correct
 	if(guessedLetter == solutionLetter){
@@ -135,9 +132,6 @@ const flipTile = (tileNum) => {
 	let tile = document.querySelector('#guessTile' + tileNum);
 	
   tile.classList.add('flip-in');
-  setTimeout(() => {
-    tile.classList.add(state);
-  }, 250);
   setTimeout(() => {
     tile.classList.remove('flip-in');
     tile.classList.add('flip-out');
