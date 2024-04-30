@@ -20,7 +20,28 @@ console.log('\nsolutionWord ' + solutionWord)
 	*		.then(data => console.log(data))
 */
 
-document.addEventListener('keydown', (e) => {
+const validWord = (currentGuess)  => {
+	return fetch("https://api.dicionario-aberto.net/word/" + currentGuess)
+			.then(response => {
+					if (!response.ok) {
+							throw new Error('Erro ao acessar a API');
+					}
+					return response.json();
+			})
+			.then(data => {
+					if (data.length !== 0) {
+							return true;
+					} else {
+							return false;
+					}
+			})
+			.catch(error => {
+					console.error("Ocorreu um erro ao validar a palavra:", error);
+					return false; 
+			});
+}
+
+document.addEventListener('keydown', (e)  => {
 	let keypress = e.key;
 	let currentTile = document.querySelector('#guess'+ currentGuessCount +'Tile' + currentGuess.dataset.letters.length);
 
@@ -42,10 +63,17 @@ document.addEventListener('keydown', (e) => {
       deleteFromLetters();
     } else if (e.key == 'Enter' && currentGuess.dataset.letters.length == 5) {
 			// console.log('submit guess')
-			submitGuess()
+
+		 validWord(currentGuess.dataset.letters)
+			.then(result => {
+					if(result){
+						submitGuess()
+					}
+			});
     }
   }
 })
+
 
 const submitGuess = () =>{
 	for(let i = 0; i < 5; i++){
@@ -132,6 +160,7 @@ const checkLetter = (position) =>{
 const checkLetterExists =  (letter) => {
 	return solutionWord.includes (letter)
 }
+
 
 /**
  *  Reveal letters state
