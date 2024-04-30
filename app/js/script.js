@@ -37,7 +37,7 @@ document.addEventListener('keydown', (e) => {
     } else if (e.key == 'Enter' && currentGuess.dataset.letters.length == 5) {
 			// console.log('submit guess')
 			for(let i = 0; i < 5; i++){
-				checkLetter(i);
+				revealTile(i, checkLetter(i));
 			}
     }
   }
@@ -94,22 +94,35 @@ const checkLetter = (position) =>{
 
 	// Se a letra existir e a posição estiver correta retorna correct
 	if(guessedLetter == solutionLetter){
-		console.log('correct')
 		return 'correct'
 	} else{
 		// se a letra existir e a posicao estiver incorreta retorna present 
 		if(checkLetterExists(guessedLetter)){
-			console.log('present')
 			return 'present'
 		}else{
 			// se a letra não existir na solucao retorna absent
-			console.log('absent')
 			return 'absent'
 		}
 	}
 }
 
-
 const checkLetterExists =  (letter) => {
 	return solutionWord.includes (letter)
+}
+
+const revealTile = (i, status) => {
+	let guessedLetter = currentGuess.dataset.letters.charAt(i);
+	let tileNum = i + 1;
+	let tile = document.querySelector('#guessTile' + tileNum);
+
+	if(status == 'correct'){
+		tile.classList.add('correct');
+		tile.setAttribute("aria-label", "letra '" + guessedLetter + "' está correta");
+	}else if(status == 'present'){
+		tile.classList.add('present');
+		tile.setAttribute("aria-label", "letra '" + guessedLetter + "' está em outra posição");
+	}else  if(status == 'absent'){
+		tile.classList.add('absent');
+		tile.setAttribute("aria-label", "letra '" + guessedLetter + "' está errada");
+	}
 }

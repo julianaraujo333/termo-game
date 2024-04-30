@@ -24,4 +24,19 @@
       border-bottom: rem(7) solid #4C4347;
     }
   }
+
+  .correct{
+    background-color: var(--correct);
+    border-color: var(--correct);
+  }
+
+  .present{
+    background-color: var(--present);
+    border-color: var(--present);
+  }
+
+  .absent{
+    background-color: var(--absent);
+    border-color: var(--absent);
+  }
 }
