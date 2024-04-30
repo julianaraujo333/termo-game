@@ -71,7 +71,6 @@ const checkWin = () =>{
 	}
 }
 
-
 /**
  * Updates the entered letters for the current guess and updates corresponding tiles.
  */
