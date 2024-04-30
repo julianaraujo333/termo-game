@@ -42,17 +42,33 @@ document.addEventListener('keydown', (e) => {
       deleteFromLetters();
     } else if (e.key == 'Enter' && currentGuess.dataset.letters.length == 5) {
 			// console.log('submit guess')
-			for(let i = 0; i < 5; i++){
-				setTimeout(()=>{
-					revealTile(i, checkLetter(i));
-				}, i * 200)
-			}
+			submitGuess()
     }
   }
 })
 
 const submitGuess = () =>{
+	for(let i = 0; i < 5; i++){
+		setTimeout(()=>{
+			revealTile(i, checkLetter(i));
+		}, i * 200)
+	}
+}
 
+const checkIfGuessComplete = (i) => {
+  if (i == 4) {
+    checkWin();
+  }
+};
+
+const checkWin = () =>{
+	if(solutionWord == currentGuess.dataset.letters){
+		console.log('win')
+	}else{
+		currentGuessCount = currentGuessCount + 1;
+		currentGuess = document.querySelector("#guess" +  currentGuessCount)
+		document.querySelector('#guess'+ currentGuessCount).classList.remove('blocked')
+	}
 }
 
 
@@ -126,7 +142,7 @@ const revealTile = (i, status) => {
 	let guessedLetter = currentGuess.dataset.letters.charAt(i);
 	let tileNum = i + 1;
 	let tile = document.querySelector('#guess'+ currentGuessCount +'Tile' + tileNum);
-
+	
 	if(status == 'correct'){
 		tile.classList.add('correct');
 		tile.setAttribute("aria-label", "letra '" + guessedLetter + "' está correta");
@@ -139,6 +155,7 @@ const revealTile = (i, status) => {
 	}
 
 	flipTile(tileNum)
+	checkIfGuessComplete(i);
 }
 
 // adding flip animation

@@ -1,11 +1,18 @@
 @use '../util' as *;
 
+.guess.blocked{
+  .guess__tile{
+    background-color: var(--blocked);
+    border: rem(4) solid  var(--blocked);
+  }
+}
+
 .guess{
   display: grid;
   grid-template-columns: repeat(5, 1fr);
   gap: rem(3);
   width: rem(300);
-  margin-bottom: rem(6);
+  margin-bottom: rem(10);
 
   &__tile{
     display: flex;
