@@ -1,4 +1,6 @@
 const lettersPattern = /[a-z]/;
+const msg = document.querySelector('.msg');
+
 let currentGuessCount = 1;
 let currentGuess = document.querySelector('#guess' + currentGuessCount);
 let currentLetter = currentGuess.dataset.letters;
@@ -20,6 +22,7 @@ console.log('\nsolutionWord ' + solutionWord)
 	*		.then(data => console.log(data))
 */
 
+
 const validWord = (currentGuess)  => {
 	return fetch("https://api.dicionario-aberto.net/word/" + currentGuess)
 			.then(response => {
@@ -32,7 +35,11 @@ const validWord = (currentGuess)  => {
 					if (data.length !== 0) {
 							return true;
 					} else {
-							return false;
+						const classes = ['default', 'popup'];
+						msg.classList.add(...classes);
+						msg.innerHTML = `essa palavra não é aceita`;
+						
+						return false;
 					}
 			})
 			.catch(error => {
@@ -60,6 +67,13 @@ document.addEventListener('keydown', (e)  => {
       // console.log('is letter');
     } else if (e.key == 'Backspace' && currentGuess.dataset.letters != '' || e.key === "Delete" && currentGuess.dataset.letters != '') {
 			
+			// clearing error message
+			let msgClean = document.querySelector(".default");
+			if(msgClean){
+				msg.innerHTML = "";
+				msgClean.classList.remove('default');
+			}
+
       deleteFromLetters();
     } else if (e.key == 'Enter' && currentGuess.dataset.letters.length == 5) {
 			// console.log('submit guess')
