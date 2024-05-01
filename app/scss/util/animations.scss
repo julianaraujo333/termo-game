@@ -23,3 +23,21 @@
 .flip-out{
   animation: flip-out 250ms forwards;
 }
+
+
+@keyframes jump {
+  0% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-6px);
+  }
+  100% {
+    transform: translateY(0);
+  }
+}
+
+.jump {
+  animation: jump 250ms;
+  animation-fill-mode: forwards;
+}

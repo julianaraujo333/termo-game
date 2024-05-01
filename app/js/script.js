@@ -91,7 +91,8 @@ const checkIfGuessComplete = (i) => {
 
 const checkWin = () =>{
 	if(solutionWord == currentGuess.dataset.letters){
-		console.log('win')
+		console.log('YOUU WIN')
+		jumpTiles()
 	}else{
 		currentGuessCount = currentGuessCount + 1;
 		currentGuess = document.querySelector("#guess" +  currentGuessCount)
@@ -117,6 +118,17 @@ const updateTiles = (tileNumber, letter) => {
 
 	currentTile.classList.add('current-letter');
 }
+
+const jumpTiles = () => {
+  for (let i = 0; i < 5; i++) {
+    setTimeout(() => {
+      let currentTile = document.querySelector(
+        '#guess' + currentGuessCount + 'Tile' + (i + 1)
+      );
+      currentTile.classList.add('jump');
+    }, i * 200);
+  }
+};
 
 
 /**
